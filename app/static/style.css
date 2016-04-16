@@ -1,6 +1,6 @@
 html, body {
   text-align: center;
-  margin-top: 5%;
+  margin-top: 10px;
   font-family: 'Century Gothic';
   font-size: 10px;
   color: #000000;
@@ -23,13 +23,14 @@ h2 {
 	font-size: 15px;
 }
 
-div.places {
-	font-size: 12px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 20px;
-	padding-bottom: 5px;
-	width: 300px;
-	height: 100px;
-	background-color: #B48AAB;
+#result {
+	text-align: left;
+	height: 200px;
+	width: 20%;
+	float: center;
+	margin-top: 5px;
+	margin-right: 5px;
+	padding: 20px;
+	display: inline-block;
+	background-color: #e5e5e5;
 }
