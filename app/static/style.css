@@ -2,7 +2,7 @@ html, body {
   text-align: center;
   margin-top: 10px;
   font-family: 'Century Gothic';
-  font-size: 10px;
+  font-size: 14px;
   color: #000000;
   background: #FFFFFF;
 }
@@ -20,17 +20,22 @@ input[type="text"], textarea {
 }
 
 h2 {
-	font-size: 15px;
+	font-size: 30px;
 }
 
 #result {
 	text-align: left;
 	height: 200px;
-	width: 20%;
-	float: center;
-	margin-top: 5px;
+	width: 200px;
+	float: left;
 	margin-right: 5px;
 	padding: 20px;
 	display: inline-block;
 	background-color: #e5e5e5;
 }
+
+#wrapper {
+    width: 500px;
+    margin: 0 auto;
+}
+

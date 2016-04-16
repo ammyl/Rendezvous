@@ -6,5 +6,4 @@ from geopy.geocoders import Nominatim
 
 geolocator = Nominatim()
 city = geolocator.geocode("Cleveland Ohio")
-latitude = hello.lat
-longitude = hello.long
+print(city.latitude)

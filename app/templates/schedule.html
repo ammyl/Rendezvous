@@ -9,20 +9,22 @@
 	<body>
 		<div class="container-fluid">
 			<img src="\static\logo.png" height ="150px" width="150px">
-			<div class="container-fluid">
 			
+			
+			<div id= "wrapper" style="text-align:center;">
 				<div id="result">
-					{{ location }}
-					<br>
-					{{ temperature }}
-					<br>
-					{{ condition }}
+					today is...
+					<h2>{{ temperature }}°F</h2>
+					and {{ condition }}, at {{ city }}.
 				</div>
+
 				<div id="result">
 					hello again~
 				</div>
-			
 			</div>
+				</center>
+			
+			
 		</div>
 	</body>
 
