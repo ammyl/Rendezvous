@@ -113,7 +113,7 @@ def inOrOut(area):
         result = nightLife(activity)
         return result
 
-def nameAndLocation(result):
+def nameAndLocation(result, string):
     for x in result:
         #this is the one big definition to the one key
         key = (result[x])
@@ -133,13 +133,12 @@ def nameAndLocation(result):
                         
             if key == "name":
                 name = venue[key]
-        print ("Name:", name)
-        print("Location:", location)
+        string = string + " Name: " + name + "\n" + "Location" + location + "\n"
 
 
 def main():
+    string = ""
     
-    string
     #using this for the loop- 6 events: breakfast, 1st activity,
     #lunch, 2nd activity, dinner, and night activity
     i = 0
@@ -147,33 +146,33 @@ def main():
         if i == 0:
             print("breakfast")
             result = breakfast()
-            nameAndLocation(result)
+            nameAndLocation(result, string)
             
         elif i == 1:
             print("after breakfast activity")
             result = inOrOut(area)
-            nameAndLocation(result)
+            nameAndLocation(result, string)
 
         elif i == 2:
             print("lunch")
             result = lunch()
-            nameAndLocation(result)
+            nameAndLocation(result, string)
             
         elif i == 3:
             print("after lunch activity")
             result = inOrOut(area)
-            nameAndLocation(result)
+            nameAndLocation(result, string)
 
         elif i == 4:
             print("dinner")
             result = dinner()
-            nameAndLocation(result)
+            nameAndLocation(result, string)
 
         elif i == 5:
             area = "night"
             print("after dinner activity")
             result = inOrOut(area)
-            nameAndLocation(result)
+            nameAndLocation(result, string)
         
         i = i + 1
         
