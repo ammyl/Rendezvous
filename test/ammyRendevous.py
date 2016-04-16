@@ -3,7 +3,8 @@
 import foursquare
 import random
 
-client = foursquare.Foursquare(client_id='JEK02X44TGMNJSE0VC1UBEB4FRNNW3UMFQ4IQOPI4BAR2GXA', client_secret='A2Z50VTUHHXEUYJBHCQKB1LXTNVVBYBQR4SDASVTXTWUMWXS')
+client = foursquare.Foursquare(client_id='JEK02X44TGMNJSE0VC1UBEB4FRNNW3UMFQ4IQOPI4BAR2GXA', 
+                               client_secret='A2Z50VTUHHXEUYJBHCQKB1LXTNVVBYBQR4SDASVTXTWUMWXS')
 
 #lists of activities
 outdoorList = ["rock climbing", "park", "tennis court", "barbecue",
@@ -90,7 +91,7 @@ def main():
     #this is temporary - need to get this from weather
     area = "outdoor"
     
-    #using this for the loop- 5 events: breakfast, 1st activity,
+    #using this for the loop- 6 events: breakfast, 1st activity,
     #lunch, 2nd activity, dinner, and night activity
     i = 0
     while (i < 6):
