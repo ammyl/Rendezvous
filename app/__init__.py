@@ -6,11 +6,12 @@ from os.path import isfile, join
 import foursquare
 import yweather
 from geopy.geocoders import Nominatim
+import random
 
 
 app = Flask(__name__) 
 
-client = yweather.Client()
+clientWeather = yweather.Client()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -26,8 +27,8 @@ def schedule():
     city_state = request.args["city_state"] # New York City, New York
 
     # weather part
-    ID = client.fetch_woeid(city_state)
-    Info = client.fetch_weather(ID)
+    ID = clientWeather.fetch_woeid(city_state)
+    Info = clientWeather.fetch_weather(ID)
 
     # info gotta pass
     location = (Info["location"]["city"],Info["location"]["region"])
@@ -55,127 +56,130 @@ def schedule():
     longitude = city.longitude
 
 
-    coordinates = str(latitude) + ", " + str(longitude)
+    newLocation = str(latitude) + ", " + str(longitude)
 
-    if condition != "rainy" or temperature > 80 or temperature < 45:
-        area = "outdoor"
-    else:
-        area = "indoor"
+    def determineOutIn(condition, temperature):
+        if condition != "rainy" or temperature > 80 or temperature < 45:
+            area = "outdoor"
+        else:
+            area = "indoor"
+        return(area)
 
-    inOrOut(area)
-
+    area = determineOutIn(condition, temperature)
     
-    
-    return render_template('schedule.html', city = city, \
-                           temperature = temperature, \
-                           condition = condition)
-
-def indoor(activity):
-    return (client.venues.search(params={'ll': newLocation, 
+    def indoor(activity):
+        return (client.venues.search(params={'ll': newLocation, 
                                          'query': activity}))
 
-def outdoor(activity):
-    return(client.venues.search(params={'ll': newLocation, 
+    def outdoor(activity):
+        return(client.venues.search(params={'ll': newLocation, 
                                         'query': activity}))
 
-def breakfast():
-    return(client.venues.search(params={'ll': newLocation, 
-                                        'query': "breakfast"}))
+    def breakfast():
+        return(client.venues.search(params={'ll': newLocation, 
+                                            'query': "breakfast"}))
 
-def lunch():
-    return(client.venues.search(params={'ll': newLocation, 
-                                        'query': "lunch"}))
+    def lunch():
+        return(client.venues.search(params={'ll': newLocation, 
+                                            'query': "lunch"}))
 
-def dinner():
-    return(client.venues.search(params={'ll': newLocation, 
-                                        'query': "dinner"}))
+    def dinner():
+        return(client.venues.search(params={'ll': newLocation, 
+                                            'query': "dinner"}))
 
-def nightLife(activity):
-    return(client.venues.search(params={'ll': newLocation, 
-                                        'query': activity}))
+    def nightLife(activity):
+        return(client.venues.search(params={'ll': newLocation, 
+                                            'query': activity}))
 
-def inOrOut(area):
-    if area == "outdoor":
-        activity = random.choice(outdoorList)
-        print (activity)
-        result = outdoor(activity)
-        return result
+    def inOrOut(area):
+        if area == "outdoor":
+            activity = random.choice(outdoorList)
+            print (activity)
+            result = outdoor(activity)
+            return result
 
-    elif area == "indoor":
-        activity = random.choice(indoorList)
-        print (activity)
-        result = indoor(activity)
-        return result
+        elif area == "indoor":
+            activity = random.choice(indoorList)
+            print (activity)
+            result = indoor(activity)
+            return result
 
-    elif area == "night":
-        activity = random.choice(nightList)
-        print(activity)
-        result = nightLife(activity)
-        return result
+        elif area == "night":
+            activity = random.choice(nightList)
+            print(activity)
+            result = nightLife(activity)
+            return result
 
-def nameAndLocation(result, string):
-    for x in result:
-        #this is the one big definition to the one key
-        key = (result[x])
-        #this picks a random number
-        which = random.randint(0,len(key)-1)
-        #picks a venue from the random number
-        venue = key[which]
-        #looks through venue attributes to find name and location
-        for key in venue:
-            if key == "location":
-                locationDict = venue[key]
-                for lkey in locationDict:
-                    if lkey == "address":
-                        location = locationDict[lkey]
-                    elif lkey == "formattedAddress":
-                        location = locationDict[lkey]
-                        
-            if key == "name":
-                name = venue[key]
-        string = string + " Name: " + name + "\n" + "Location" + location + "\n"
+    def nameAndLocation(result):
+        for x in result:
+            #this is the one big definition to the one key
+            key = (result[x])
+            #this picks a random number
+            which = random.randint(0,len(key)-1)
+            #picks a venue from the random number
+            venue = key[which]
+            #looks through venue attributes to find name and location
+            for key in venue:
+                if key == "location":
+                    locationDict = venue[key]
+                    for lkey in locationDict:
+                        if lkey == "address":
+                            location = locationDict[lkey]
+                        elif lkey == "formattedAddress":
+                            location = locationDict[lkey]
+                            
+                if key == "name":
+                    name = venue[key]
+        return[name, location]
 
-
-def main():
-    string = ""
     
-    #using this for the loop- 6 events: breakfast, 1st activity,
-    #lunch, 2nd activity, dinner, and night activity
-    i = 0
-    while (i < 6):
-        if i == 0:
-            print("breakfast")
-            result = breakfast()
-            nameAndLocation(result, string)
-            
-        elif i == 1:
-            print("after breakfast activity")
-            result = inOrOut(area)
-            nameAndLocation(result, string)
 
-        elif i == 2:
-            print("lunch")
-            result = lunch()
-            nameAndLocation(result, string)
-            
-        elif i == 3:
-            print("after lunch activity")
-            result = inOrOut(area)
-            nameAndLocation(result, string)
-
-        elif i == 4:
-            print("dinner")
-            result = dinner()
-            nameAndLocation(result, string)
-
-        elif i == 5:
-            area = "night"
-            print("after dinner activity")
-            result = inOrOut(area)
-            nameAndLocation(result, string)
+    def string():
         
-        i = i + 1
+        #using this for the loop- 6 events: breakfast, 1st activity,
+        #lunch, 2nd activity, dinner, and night activity
+        i = 0
+        while (i < 6):
+            if i == 0:
+                result = breakfast()
+                list1 = nameAndLocation(result)
+                
+            elif i == 1:
+                result = inOrOut(area)
+                list2 = nameAndLocation(result)
+
+            elif i == 2:
+                result = lunch()
+                list3 = nameAndLocation(result, string)
+                
+            elif i == 3:
+                result = inOrOut(area)
+                list4 = nameAndLocation(result, string)
+
+            elif i == 4:
+                result = dinner()
+                list5 = nameAndLocation(result, string)
+
+            elif i == 5:
+                area = "night"
+                result = inOrOut(area)
+                list6 = nameAndLocation(result, string)
+            
+            i = i + 1
         
+        returningList = [list1, list2, list3, list4, list5, list6]
+        return(returningList)
+    
+    stuff = string()
+        
+    return render_template('schedule.html', city = city, \
+                           temperature = temperature, \
+                           condition = condition)#, stuff = stuff)
+
+
+
+
+
 
 
 
