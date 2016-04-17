@@ -58,14 +58,17 @@ def schedule():
 
     newLocation = str(latitude) + ", " + str(longitude)
 
+    
     def determineOutIn(condition, temperature):
-        if condition != "rainy" or temperature > 80 or temperature < 45:
+        if condition != "rainy" or temperature < 80 or temperature > 45:
             area = "outdoor"
         else:
             area = "indoor"
         return(area)
+    determineOutIn(condition,temperature)
 
     area = determineOutIn(condition, temperature)
+    
     
     def indoor(activity):
         return (client.venues.search(params={'ll': newLocation, 
@@ -94,19 +97,16 @@ def schedule():
     def inOrOut(area):
         if area == "outdoor":
             activity = random.choice(outdoorList)
-            print (activity)
             result = outdoor(activity)
             return result
 
         elif area == "indoor":
             activity = random.choice(indoorList)
-            print (activity)
             result = indoor(activity)
             return result
 
         elif area == "night":
             activity = random.choice(nightList)
-            print(activity)
             result = nightLife(activity)
             return result
 
@@ -134,7 +134,7 @@ def schedule():
 
     
 
-    def string():
+    def string(area):
         
         #using this for the loop- 6 events: breakfast, 1st activity,
         #lunch, 2nd activity, dinner, and night activity
@@ -150,31 +150,35 @@ def schedule():
 
             elif i == 2:
                 result = lunch()
-                list3 = nameAndLocation(result, string)
+                list3 = nameAndLocation(result)
                 
             elif i == 3:
                 result = inOrOut(area)
-                list4 = nameAndLocation(result, string)
+                list4 = nameAndLocation(result)
 
             elif i == 4:
                 result = dinner()
-                list5 = nameAndLocation(result, string)
+                list5 = nameAndLocation(result)
 
             elif i == 5:
                 area = "night"
                 result = inOrOut(area)
-                list6 = nameAndLocation(result, string)
+                list6 = nameAndLocation(result)
             
             i = i + 1
         
         returningList = [list1, list2, list3, list4, list5, list6]
         return(returningList)
     
-    stuff = string()
+    stuff = string(area)
+
+    header = ["breakfast", "activity one", "lunch", "activity two", \
+              "dinner", "activity three"]
         
     return render_template('schedule.html', city = city, \
                            temperature = temperature, \
-                           condition = condition)#, stuff = stuff)
+                           condition = condition, stuff = stuff, \
+                           header = header)
 
 
 

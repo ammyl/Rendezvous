@@ -19,7 +19,14 @@
 				</div>
 
 				<div id="result">
-					{{ stuff }}
+
+					{% for bigList in stuff %}
+						<h3>{{ bigList[0] }}</h3>
+						{% for addressPart in bigList[1] %}
+							{{ addressPart }}
+						<br>
+						{% endfor %}
+					{% endfor %}
 				</div>
 			</div>
 				</center>

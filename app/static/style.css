@@ -23,6 +23,10 @@ h2 {
 	font-size: 30px;
 }
 
+h3 {
+	font-size: 12px;
+}
+
 #result {
 	text-align: left;
 	height: 200px;
@@ -32,6 +36,7 @@ h2 {
 	padding: 20px;
 	display: inline-block;
 	background-color: #e5e5e5;
+	overflow: auto;
 }
 
 #wrapper {
