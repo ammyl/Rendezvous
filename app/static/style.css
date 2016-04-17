@@ -2,7 +2,7 @@ html, body {
   text-align: center;
   margin-top: 10px;
   font-family: 'Century Gothic';
-  font-size: 14px;
+  font-size: 10px;
   color: #000000;
   background: #FFFFFF;
 }
@@ -24,6 +24,7 @@ h2 {
 }
 
 h3 {
+	text-align: right;
 	font-size: 12px;
 }
 

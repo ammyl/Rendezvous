@@ -9,7 +9,7 @@
 	<body>
 		<div class="container-fluid">
 			<img src="\static\logo.png" height ="150px" width="150px">
-			
+			<br><br>
 			
 			<div id= "wrapper" style="text-align:center;">
 				<div id="result">
@@ -19,13 +19,15 @@
 				</div>
 
 				<div id="result">
-
-					{% for bigList in stuff %}
-						<h3>{{ bigList[0] }}</h3>
-						{% for addressPart in bigList[1] %}
-							{{ addressPart }}
-						<br>
+					{% for i in range(0, length) %}
+						<h3>{{ header[i] }}</h3>
+						<b>{{ stuff[i][0] }} </b><br>
+						located at:<br>
+						{% for mem in stuff[i][1] %}
+							{{ mem }}
 						{% endfor %}
+						<br>
+						<hr>
 					{% endfor %}
 				</div>
 			</div>

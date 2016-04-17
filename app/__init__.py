@@ -174,11 +174,11 @@ def schedule():
 
     header = ["breakfast", "activity one", "lunch", "activity two", \
               "dinner", "activity three"]
-        
+    length = len(stuff)
     return render_template('schedule.html', city = city, \
                            temperature = temperature, \
                            condition = condition, stuff = stuff, \
-                           header = header)
+                           header = header, length = length)
 
 
 
